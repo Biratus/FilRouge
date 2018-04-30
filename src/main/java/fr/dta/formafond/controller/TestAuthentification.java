@@ -19,13 +19,13 @@ public class TestAuthentification {
 	}
 	
 	@RequestMapping(value="/private",method=RequestMethod.GET)
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasAuthority('USER')")
 	public String privateAccess() {
 		return "private Access";
 	}
 	
 	@RequestMapping(value="/private/admin",method=RequestMethod.GET)
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String privateAdminAccess() {
 		return "private Admin Access";
 	}

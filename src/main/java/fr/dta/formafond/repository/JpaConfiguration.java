@@ -48,7 +48,7 @@ public class JpaConfiguration {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
 		emf.setDataSource(dataSource());
-		emf.setPackagesToScan("fr.dta.model");
+		emf.setPackagesToScan("fr.dta.formafond.model");
 
 		JpaVendorAdapter vAdapter = new HibernateJpaVendorAdapter();
 		emf.setJpaVendorAdapter(vAdapter);
