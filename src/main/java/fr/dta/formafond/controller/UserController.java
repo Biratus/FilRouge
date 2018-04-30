@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import fr.dta.formafond.exception.UserAlreadyExistsException;
 import fr.dta.formafond.model.User;
+import fr.dta.formafond.service.SecurityService;
 import fr.dta.formafond.service.UserService;
 
 @RestController
@@ -23,8 +24,17 @@ public class UserController {
 	@Autowired
 	UserService userv;
 	
+	@Autowired
+	SecurityService secuServ;
+	
 	public UserController() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	@RequestMapping(value="/current",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@CrossOrigin
+	public ObjectNode getConnectedUser() {
+		return secuServ.getConnectedUser().toJson();
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
