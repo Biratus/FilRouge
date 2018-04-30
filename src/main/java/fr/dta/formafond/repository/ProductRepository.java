@@ -4,10 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.h2.util.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.stereotype.Repository;
 
 import fr.dta.formafond.model.Category;

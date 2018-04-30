@@ -86,12 +86,10 @@ public class ProductController {
 	// }
 
 	@CrossOrigin
-	@RequestMapping(value= "/search" ,method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public List<Product> search(@RequestParam(required=false) String name, @RequestParam(required= false) String category) {
-		System.out.println("name : " + name);
-		System.out.println("category :" + category);
-		Category cat=category==null?null:Category.valueOf(category);
-		return productService.search(name, cat);
+	@RequestMapping(value = "/search", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public List<Product> search(@RequestParam(required = false) String name,
+			@RequestParam(required = false) Category category) {
+		return productService.search(name, category);
 	}
 
 }
