@@ -20,7 +20,6 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler{
 	@Override
 	public void handle(HttpServletRequest arg0, HttpServletResponse response, AccessDeniedException arg2)
 			throws IOException, ServletException {
-		System.out.println("access denied");
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	}
 
