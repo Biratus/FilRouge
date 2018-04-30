@@ -21,10 +21,41 @@ public class User extends PrimeModel {
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public User(String lastName, String firstName, Role role) {
+		super();
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.role = role;
+	}
 
 	@Override
 	public long getId() {
 		return this.id;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

@@ -24,9 +24,16 @@ public class AuthenticationService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
-			
-		return new User("toto","pwd",Arrays.asList(new SimpleGrantedAuthority("DEFAULT_USER")));
+		if("admin".equals(username)) {//ADMIN
+			System.out.println("ADMIN");
+			return new User(username,"pwd",Arrays.asList(new SimpleGrantedAuthority("ADMIN"),new SimpleGrantedAuthority("USER")));
+		} else if("user".equals(username)) {//USER
+			System.out.println("USER");
+			return new User(username,"pwd",Arrays.asList(new SimpleGrantedAuthority("USER")));
+		} else { //VISITOR
+			System.out.println("VISITOR");
+			return new User("toto","pwd",Arrays.asList());
+		}
 	}
 
 }
