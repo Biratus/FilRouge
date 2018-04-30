@@ -20,7 +20,7 @@ import fr.dta.formafond.model.Product;
 import fr.dta.formafond.service.ProductService;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/Api/product")
 public class ProductController {
 
 	@Autowired
@@ -69,20 +69,17 @@ public class ProductController {
 	}
 
 	@CrossOrigin
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void remove(@PathVariable long id) {
 		productService.remove(id);
 	}
 
 	@CrossOrigin
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void remove(@PathVariable Product p) {
 		productService.remove(p);
 	}
 
-	@CrossOrigin
-	@RequestMapping(value = "/products", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void filter(@PathVariable Category category) {
-		productService.filterCategory(category);
-	}
+	
+	
 }

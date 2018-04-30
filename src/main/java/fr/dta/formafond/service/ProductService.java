@@ -41,23 +41,5 @@ public class ProductService {
 		return productRepository.remove(id);
 	}
 
-	public Product filterCategory(Category category) {
-		return productRepository.filterCategory(category);
-	}
-	
-	public Product filterType(String type) {
-		return productRepository.filterType(type);
-	}
-	
-	public Product filterName(String name) {
-		return productRepository.filterName(name);
-	}
-	
-	public Product filterPrice(int price) {
-		return productRepository.filterPrice(price);
-	}
-	
-	public Product filterQuantity(int qty) {
-		return productRepository.filterQuantity(qty);
-	}
+
 }
