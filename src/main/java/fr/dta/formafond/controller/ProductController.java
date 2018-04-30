@@ -69,13 +69,13 @@ public class ProductController {
 	}
 
 	@CrossOrigin
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public void remove(@PathVariable long id) {
 		productService.remove(id);
 	}
 
 	@CrossOrigin
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public void remove(@PathVariable Product p) {
 		productService.remove(p);
 	}
