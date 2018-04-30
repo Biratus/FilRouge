@@ -22,6 +22,7 @@ public class ProductService {
 	}
 
 	public Product get(long id) {
+
 		return productRepository.get(id);
 	}
 
@@ -33,13 +34,16 @@ public class ProductService {
 		return productRepository.save(p);
 	}
 
-	public boolean remove(Product p) {
-		return productRepository.remove(p);
-	}
+	// public boolean remove(Product p) {
+	// return productRepository.remove(p);
+	// }
 
 	public boolean remove(long id) {
 		return productRepository.remove(id);
 	}
 
+	public List<Product> search(String name, Category category) {
+		return productRepository.search(name, category);
+	}
 
 }

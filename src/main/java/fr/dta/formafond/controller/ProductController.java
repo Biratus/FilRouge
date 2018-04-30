@@ -1,5 +1,7 @@
 package fr.dta.formafond.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -39,7 +42,7 @@ public class ProductController {
 		node.put("name", p.getName());
 		node.put("type", p.getType());
 		node.put("price", p.getPrice());
-		node.put("category", p.getCategory().ordinal());
+		node.put("category", p.getCategory().toString());
 		node.put("qty", p.getQty());
 		node.put("src", p.getSrc());
 
@@ -69,17 +72,26 @@ public class ProductController {
 	}
 
 	@CrossOrigin
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void remove(@PathVariable long id) {
 		productService.remove(id);
 	}
 
+	// @CrossOrigin
+	// @RequestMapping(method = RequestMethod.DELETE, consumes =
+	// MediaType.APPLICATION_JSON_VALUE)
+	// public void remove(@RequestBody Product p) {
+	// System.out.println(p);
+	// productService.remove(p);
+	// }
+
 	@CrossOrigin
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void remove(@PathVariable Product p) {
-		productService.remove(p);
+	@RequestMapping(value= "/search" ,method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public List<Product> search(@RequestParam(required=false) String name, @RequestParam(required= false) String category) {
+		System.out.println("name : " + name);
+		System.out.println("category :" + category);
+		Category cat=category==null?null:Category.valueOf(category);
+		return productService.search(name, cat);
 	}
 
-	
-	
 }

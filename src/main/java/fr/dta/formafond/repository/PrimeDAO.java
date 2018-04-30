@@ -31,7 +31,7 @@ public class PrimeDAO<T extends PrimeModel> {
 	}
 
 	public T save(T t) {
-		if (t.getId() == 0)
+		if (t.getId() == null || t.getId()<=0)
 			em.persist(t);
 
 		else if (!em.contains(t))

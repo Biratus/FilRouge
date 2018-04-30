@@ -6,22 +6,31 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @SequenceGenerator(name = "product_gen", sequenceName = "product_gen", initialValue = 100, allocationSize = 1)
 public class Product extends PrimeModel {
 
+	/* TODO METTRE LES NOT NULL SUR LES COLONNES ADEQUATES */
+
 	@Id
 	@GeneratedValue(generator = "product_gen")
 	private Long id;
 
+	@NotBlank
 	private String name;
+	@NotBlank
 	private String type;
+	@NotNull
 	private Integer price;
 
 	@Enumerated(EnumType.STRING)
 	private Category category;
 
+	@NotNull
 	private Integer qty;
 	private String src;
 	private String descript;
