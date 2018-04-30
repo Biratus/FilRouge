@@ -58,4 +58,5 @@ public class PrimeDAO<T extends PrimeModel> {
 		TypedQuery<T> query = em.createQuery("from "+table, klass);
 		return query.getResultList();
 	}
+	
 }

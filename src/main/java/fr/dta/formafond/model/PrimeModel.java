@@ -2,11 +2,11 @@ package fr.dta.formafond.model;
 
 public abstract class PrimeModel {
 
-	public abstract long getId();
+	public abstract Long getId();
 
 	@Override
 	public int hashCode() {
-		return (int)getId();
+		return getId().intValue();
 	}
 	
 	@Override
