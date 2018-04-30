@@ -1,4 +1,4 @@
-package fr.dta.formafond.service;
+package fr.dta.formafond.security;
 
 import java.util.Arrays;
 
@@ -25,8 +25,14 @@ public class AuthenticationService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-			
-		return new User("toto","pwd",Arrays.asList(new SimpleGrantedAuthority("DEFAULT_USER")));
+		
+		if("admin".equals(username)) {//ADMIN
+			return new User(username,"pwd",Arrays.asList(new SimpleGrantedAuthority("ADMIN"),new SimpleGrantedAuthority("USER")));
+		} else if("user".equals(username)) {//USER
+			return new User(username,"pwd",Arrays.asList(new SimpleGrantedAuthority("USER")));
+		} else { //VISITOR
+			return new User("toto","pwd",Arrays.asList());
+		}
 	}
 
 }
