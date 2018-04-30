@@ -1,6 +1,7 @@
 package fr.dta.formafond.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,9 @@ public class UserService {
 	@Autowired
 	UserRepository urep;
 	
+	@Autowired
+	PasswordEncoder pwdEncod;
+	
 	public UserService() {
 		// TODO Auto-generated constructor stub
 	}
@@ -22,7 +26,10 @@ public class UserService {
 	public void createUser(User u) throws UserAlreadyExistsException {
 		User u_ = urep.findByUsername(u.getMail());
 		if(u_!=null) throw new UserAlreadyExistsException(u_.getMail());
-		else urep.save(u);
+		else {
+			u.setPassword(pwdEncod.encode(u.getPassword()));
+			urep.save(u);
+		}
 	}
 
 	public User getById(int id) {

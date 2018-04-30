@@ -1,11 +1,19 @@
 package fr.dta.formafond.model;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -21,25 +29,26 @@ public class User extends PrimeModel {
 
 	private String lastName;
 	private String firstName;
+	@NotNull
 	private String mail;
 	private String address;
-	private long phone;
+	@NotNull
+	private String password;
+	private Long phone;
 
-	@Enumerated
-	private Role role;
+	private String role;
 
-	public User() {
-		// TODO Auto-generated constructor stub
-	}
+	public User() {}
 
-	public User(String lastName, String firstName, String mail, String address, long phone, Role role) {
+	public User(String lastName, String firstName, String mail, String address, long phone,String password) {
 		super();
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.mail = mail;
 		this.address = address;
 		this.phone = phone;
-		this.role = role;
+		this.password=password;
+		this.role = "visitor";
 	}
 
 
@@ -64,7 +73,7 @@ public class User extends PrimeModel {
 		this.firstName = firstName;
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
@@ -96,19 +105,32 @@ public class User extends PrimeModel {
 		this.phone = phone;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public ObjectNode toJson() {
 		ObjectNode node=JsonNodeFactory.instance.objectNode();
 		node.put("firstname", this.firstName);
 		node.put("lastname", this.lastName);
-		node.put("role", this.role.toString());
+		node.put("role", this.role);
 		node.put("email", this.mail);
 		node.put("address", this.address);
 		node.put("telephone", this.phone);
+		node.put("password", this.password);
 		
 		return node;
+	}
+	
+	public List<GrantedAuthority> getAuthorities() {
+		return Arrays.asList(new SimpleGrantedAuthority(this.role));
 	}
 }
