@@ -101,10 +101,6 @@ public class User extends PrimeModel {
 		return phone;
 	}
 
-	public void setPhone(long phone) {
-		this.phone = phone;
-	}
-
 	public void setRole(String role) {
 		this.role = role;
 	}
@@ -115,6 +111,10 @@ public class User extends PrimeModel {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public void setPhone(Long phone) {
+		this.phone = phone;
 	}
 
 	public ObjectNode toJson() {
@@ -133,4 +133,10 @@ public class User extends PrimeModel {
 	public List<GrantedAuthority> getAuthorities() {
 		return Arrays.asList(new SimpleGrantedAuthority(this.role));
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", mail=" + mail
+				+ ", address=" + address + ", password=" + password + ", phone=" + phone + ", role=" + role + "]";
+	}	
 }
