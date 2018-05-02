@@ -40,6 +40,9 @@ public class ProductService {
 
 	public boolean remove(long id) {
 		return productRepository.remove(id);
+		/* TODO
+		 * Tester si le produit est commander
+		 *  */ 
 	}
 
 	public List<Product> search(String name, Category category, int page, int resultByPage) {

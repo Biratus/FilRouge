@@ -28,7 +28,7 @@ public class ProductRepository extends PrimeDAO<Product> {
 			criteria.add(Restrictions.eq("category", category));
 		}
 		criteria.setFirstResult(resultByPage*(page-1))
-		.setMaxResults(resultByPage); /* TODO */ 
+		.setMaxResults(resultByPage); 
 		return criteria.list();
 	}
 }
