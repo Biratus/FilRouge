@@ -87,7 +87,7 @@ public class ProductController {
 	// }
 
 	@CrossOrigin
-	@RequestMapping(value = "/search", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Product> search(@RequestParam(required = false) String name,
 			@RequestParam(required = false) Category category, @RequestParam(required = false) int page,
 			@RequestParam(required = false) int resultByPage) {
