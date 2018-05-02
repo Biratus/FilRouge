@@ -19,8 +19,7 @@ public class ProductRepository extends PrimeDAO<Product> {
 		super(Product.class);
 	}
 
-	public List<Product> search(String name, Category category) {
-		@SuppressWarnings("unchecked")
+	public List<Product> search(String name, Category category, int page, int resultByPage) {		
 		Criteria criteria = getSession().createCriteria(Product.class).setMaxResults(50);
 		if (name != null && !name.isEmpty()) {
 			criteria.add(Restrictions.like("name", "%" + name + "%"));
@@ -28,6 +27,8 @@ public class ProductRepository extends PrimeDAO<Product> {
 		if (category != null && category != null) {
 			criteria.add(Restrictions.eq("category", category));
 		}
+		criteria.setFirstResult(resultByPage*(page-1))
+		.setMaxResults(resultByPage); /* TODO */ 
 		return criteria.list();
 	}
 }

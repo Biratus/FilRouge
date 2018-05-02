@@ -14,8 +14,6 @@ import org.hibernate.validator.constraints.NotBlank;
 @SequenceGenerator(name = "product_gen", sequenceName = "product_gen", initialValue = 100, allocationSize = 1)
 public class Product extends PrimeModel {
 
-	/* TODO METTRE LES NOT NULL SUR LES COLONNES ADEQUATES */
-
 	@Id
 	@GeneratedValue(generator = "product_gen")
 	private Long id;

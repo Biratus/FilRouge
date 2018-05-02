@@ -29,12 +29,6 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 
-	@CrossOrigin
-	@RequestMapping(value = "/{searchId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public JsonNode getProduct(@PathVariable("searchId") long id) {
-		return toJson(productService.get(id));
-	}
-
 	public ObjectNode toJson(Product p) {
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode node = mapper.createObjectNode();
@@ -52,6 +46,12 @@ public class ProductController {
 			e.printStackTrace();
 		}
 		return node;
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value = "/{searchId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public JsonNode getProduct(@PathVariable("searchId") long id) {
+		return toJson(productService.get(id));
 	}
 
 	@CrossOrigin
@@ -88,8 +88,9 @@ public class ProductController {
 	@CrossOrigin
 	@RequestMapping(value = "/search", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<Product> search(@RequestParam(required = false) String name,
-			@RequestParam(required = false) Category category) {
-		return productService.search(name, category);
+			@RequestParam(required = false) Category category, @RequestParam(required = false) int page,
+			@RequestParam(required = false) int resultByPage) {
+		return productService.search(name, category, page, resultByPage);
 	}
 
 }

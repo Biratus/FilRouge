@@ -42,8 +42,8 @@ public class ProductService {
 		return productRepository.remove(id);
 	}
 
-	public List<Product> search(String name, Category category) {
-		return productRepository.search(name, category);
+	public List<Product> search(String name, Category category, int page, int resultByPage) {
+		return productRepository.search(name, category, page, resultByPage);
 	}
 
 }
