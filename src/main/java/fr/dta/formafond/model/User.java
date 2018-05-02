@@ -122,9 +122,9 @@ public class User extends PrimeModel {
 		node.put("firstname", this.firstName);
 		node.put("lastname", this.lastName);
 		node.put("role", this.role);
-		node.put("email", this.mail);
+		node.put("mail", this.mail);
 		node.put("address", this.address);
-		node.put("telephone", this.phone);
+		node.put("phone", this.phone);
 		node.put("password", this.password);
 		
 		return node;
