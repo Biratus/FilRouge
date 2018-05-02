@@ -32,9 +32,12 @@ public class Product extends PrimeModel {
 	private Integer qty;
 	private String src;
 	private String descript;
+	
+	@NotBlank
+	private boolean activ;
 
 	public Product(Long id, String name, String type, Integer price, Category category, Integer qty, String src,
-			String descript) {
+			String descript, boolean activ) {
 		this.id = id;
 		this.name = name;
 		this.type = type;
@@ -43,6 +46,7 @@ public class Product extends PrimeModel {
 		this.qty = qty;
 		this.src = src;
 		this.descript = descript;
+		this.activ= activ;
 	}
 
 	public Product() {
@@ -89,12 +93,6 @@ public class Product extends PrimeModel {
 		this.src = src;
 	}
 
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", type=" + type + ", price=" + price + ", tag=" + category
-				+ ", qty=" + qty + ", src=" + src + "]";
-	}
-
 	public Category getCategory() {
 		return category;
 	}
@@ -117,6 +115,20 @@ public class Product extends PrimeModel {
 
 	public void setDescript(String descript) {
 		this.descript = descript;
+	}
+
+	public boolean isActiv() {
+		return activ;
+	}
+
+	public void setActiv(boolean activ) {
+		this.activ = activ;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", type=" + type + ", price=" + price + ", category=" + category
+				+ ", qty=" + qty + ", src=" + src + ", descript=" + descript + ", activ=" + activ + "]";
 	}
 
 }

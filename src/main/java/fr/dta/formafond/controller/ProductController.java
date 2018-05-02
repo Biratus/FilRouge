@@ -39,6 +39,7 @@ public class ProductController {
 		node.put("category", p.getCategory().toString());
 		node.put("qty", p.getQty());
 		node.put("src", p.getSrc());
+		node.put("activ", p.isActiv());
 
 		try {
 			System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node));
