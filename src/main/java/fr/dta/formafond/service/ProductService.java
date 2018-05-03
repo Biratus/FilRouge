@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fr.dta.formafond.model.Category;
 import fr.dta.formafond.model.Product;
 import fr.dta.formafond.repository.ProductRepository;
 
@@ -45,7 +44,7 @@ public class ProductService {
 		 *  */ 
 	}
 
-	public List<Product> search(String name, Category category, int page, int resultByPage) {
+	public List<Product> search(String name, String category, int page, int resultByPage) {
 		return productRepository.search(name, category, page, resultByPage);
 	}
 
