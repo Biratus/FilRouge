@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum Category {
-	CLIMBING("Climbing"), DIVING("Diving"), HIKING("Hiking");
+	CLIMBING("Alpinisme / Escalade"), DIVING("Plongée"), HIKING("Randonnée");
 
 	private String name = "";
 
