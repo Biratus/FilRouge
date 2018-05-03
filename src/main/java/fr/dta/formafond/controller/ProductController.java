@@ -94,4 +94,9 @@ public class ProductController {
 		return productService.search(name, category, page, resultByPage);
 	}
 
+	@CrossOrigin
+	@RequestMapping(value = "/categories", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<String> getCategories(){
+		return Category.getCategories();
+	}
 }
