@@ -35,6 +35,7 @@ public class ProductController {
 		node.put("id", p.getId());
 		node.put("name", p.getName());
 		node.put("type", p.getType());
+		node.put("descript",p.getDescript());
 		node.put("price", p.getPrice());
 		node.put("category", p.getCategory().toString());
 		node.put("qty", p.getQty());
