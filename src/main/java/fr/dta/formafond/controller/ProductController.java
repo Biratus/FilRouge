@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -20,7 +19,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import fr.dta.formafond.model.Category;
 import fr.dta.formafond.model.Product;
-import fr.dta.formafond.model.ResultListCounted;
 import fr.dta.formafond.service.ProductService;
 
 @RestController
@@ -30,31 +28,10 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 
-	public ObjectNode toJson(Product p) {
-		ObjectMapper mapper = new ObjectMapper();
-		ObjectNode node = mapper.createObjectNode();
-		node.put("id", p.getId());
-		node.put("name", p.getName());
-		node.put("type", p.getType());
-		node.put("descript", p.getDescript());
-		node.put("price", p.getPrice());
-		node.put("category", p.getCategory().toString());
-		node.put("qty", p.getQty());
-		node.put("src", p.getSrc());
-		node.put("activ", p.isActiv());
-
-		try {
-			System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node));
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return node;
-	}
-
 	@CrossOrigin
 	@RequestMapping(value = "/{searchId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public JsonNode getProduct(@PathVariable("searchId") long id) {
-		return toJson(productService.get(id));
+		return productService.get(id).toJson();
 	}
 
 	@CrossOrigin
@@ -63,7 +40,7 @@ public class ProductController {
 		ObjectMapper mapper = new ObjectMapper();
 		ArrayNode arrNode = mapper.createArrayNode();
 		for (Product products : productService.getAll()) {
-			arrNode.add(toJson(products));
+			arrNode.add(products.toJson());
 		}
 		return arrNode;
 	}
@@ -90,10 +67,10 @@ public class ProductController {
 
 	@CrossOrigin
 	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResultListCounted search(@RequestParam(required = false) String name,
+	public ObjectNode search(@RequestParam(required = false) String name,
 			@RequestParam(required = false) String category, @RequestParam(required = false) int page,
 			@RequestParam(required = false) int resultByPage) {
-		return productService.search(name, category, page, resultByPage);
+		return productService.search(name, category, page, resultByPage).toJson();
 	}
 
 	@CrossOrigin

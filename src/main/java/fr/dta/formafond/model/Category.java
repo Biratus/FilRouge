@@ -12,18 +12,19 @@ public enum Category {
 	Category(String name) {
 		this.name = name;
 	}
-	
+
 	public String toString() {
 		return name;
 	}
-	
-	public static List<String> getCategories(){
+
+	public static List<String> getCategories() {
 		return Stream.of(Category.values()).map(c -> c.name).collect(Collectors.toList());
 	}
-	
+
 	public static Category fromString(String s) {
-		for(Category c : values()) {
-			if(c.name.equals(s)) return c;
+		for (Category c : values()) {
+			if (c.name.equals(s))
+				return c;
 		}
 		return null;
 	}

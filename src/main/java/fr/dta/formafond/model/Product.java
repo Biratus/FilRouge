@@ -14,6 +14,9 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @Entity
 @SequenceGenerator(name = "product_gen", sequenceName = "product_gen", initialValue = 100, allocationSize = 1)
@@ -56,6 +59,27 @@ public class Product extends PrimeModel {
 
 	public Product() {
 
+	}
+	
+	public ObjectNode toJson() {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode node = mapper.createObjectNode();
+		node.put("id", this.getId());
+		node.put("name", this.getName());
+		node.put("type", this.getType());
+		node.put("descript", this.getDescript());
+		node.put("price", this.getPrice());
+		node.put("category", this.getCategory().toString());
+		node.put("qty", this.getQty());
+		node.put("src", this.getSrc());
+		node.put("activ", this.isActiv());
+
+		try {
+			System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return node;
 	}
 
 	public String getName() {
