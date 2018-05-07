@@ -142,7 +142,8 @@ public class User extends PrimeModel {
 	}
 	
 	public List<GrantedAuthority> getAuthorities() {
-		return Arrays.asList(new SimpleGrantedAuthority(this.role));
+		if(this.role!=null && !this.role.isEmpty()) return Arrays.asList(new SimpleGrantedAuthority(this.role));
+		else return Arrays.asList();
 	}
 
 	@Override

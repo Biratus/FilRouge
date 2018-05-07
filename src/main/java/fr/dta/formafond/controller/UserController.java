@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -38,7 +39,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	@CrossOrigin
+	@CrossOrigin//(origins= {"http://localhost:4200"})
 	public ObjectNode createUser(@RequestBody User u) {
 		ObjectNode node=JsonNodeFactory.instance.objectNode();
 		try {
@@ -50,8 +51,8 @@ public class UserController {
 		return node;
 	}
 	
-	@RequestMapping(value="/{id}",method=RequestMethod.POST)
-	@CrossOrigin
+	@RequestMapping(value="/{id}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+//	@CrossOrigin
 	public ObjectNode getUserById(@PathVariable int id) {
 		User u = userv.getById(id);
 		if(u==null) {
@@ -61,10 +62,22 @@ public class UserController {
 		} else return u.toJson();
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE)
-	@CrossOrigin
-	public void updateUser(@RequestBody User u) {
-		userv.updateUser(u);
+	@RequestMapping(value="/byName",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+//	@CrossOrigin
+	public ObjectNode getUserByName(@RequestParam String name) {
+		User u = userv.getByUsername(name);
+		if(u==null) {
+			ObjectNode node=JsonNodeFactory.instance.objectNode();
+			node.put("state", "failed");
+			return node;
+		} else return u.toJson();
 	}
+	
+//	
+//	@RequestMapping(method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE)
+//	@CrossOrigin
+//	public void updateUser(@RequestBody User u) {
+//		userv.updateUser(u);
+//	}
 
 }
