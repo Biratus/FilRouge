@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -34,7 +33,7 @@ public class ProductRepository extends PrimeDAO<Product> {
 
 		// Criteria Search
 		Criteria criteriaSearch = getSession().createCriteria(Product.class);
-		criteriaSearch.addOrder(Order.asc("price"));
+		// criteriaSearch.addOrder(Order.asc("price"));
 
 		// Criteria ResultList
 		constructQuerySearch(criteriaSearch, name, listCategories);
@@ -44,10 +43,11 @@ public class ProductRepository extends PrimeDAO<Product> {
 	}
 
 	private void constructQuerySearch(Criteria criteria, String name, String[] listCategories) {
+		// Criteria Search by name
 		if (name != null && !name.isEmpty()) {
-			criteria.add(Restrictions.like("name", "%" + name + "%"));
-			criteria.addOrder(Order.asc("price"));
+			criteria.add(Restrictions.ilike("name", "%" + name + "%"));
 		}
+		// Criteria Search by categories
 		if (listCategories != null && listCategories.length != 0) {
 			for (String ct : listCategories) {
 				System.out.println(listCategories);

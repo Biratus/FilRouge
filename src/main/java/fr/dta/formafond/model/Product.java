@@ -32,7 +32,7 @@ public class Product extends PrimeModel {
 	private Integer qty;
 	private String src;
 	private String descript;
-	
+
 	@NotBlank
 	private Boolean activ = false;
 
@@ -46,7 +46,7 @@ public class Product extends PrimeModel {
 		this.qty = qty;
 		this.src = src;
 		this.descript = descript;
-		this.activ= activ;
+		this.activ = activ;
 	}
 
 	public Product() {
