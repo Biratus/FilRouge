@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -35,6 +36,9 @@ public class User extends PrimeModel {
 	private Long phone;
 
 	private String role;
+	
+	@OneToMany(mappedBy="user")
+	private List<Order> orders;
 
 	public User() {}
 
@@ -113,6 +117,15 @@ public class User extends PrimeModel {
 
 	public void setPhone(Long phone) {
 		this.phone = phone;
+	}
+	
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 	public ObjectNode toJson() {

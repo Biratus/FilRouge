@@ -21,7 +21,7 @@ public class ProductService {
 	public ProductService() {
 	}
 
-	public Product get(long id) {
+	public Product get(Long id) {
 
 		return productRepository.get(id);
 	}
@@ -38,7 +38,7 @@ public class ProductService {
 	// return productRepository.remove(p);
 	// }
 
-	public boolean remove(long id) {
+	public boolean remove(Long id) {
 		return productRepository.remove(id);
 		/*
 		 * TODO Tester si le produit est commander
