@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.dta.formafond.model.Product;
+import fr.dta.formafond.model.ResultListCounted;
 import fr.dta.formafond.repository.ProductRepository;
 
 @Service
@@ -39,12 +40,12 @@ public class ProductService {
 
 	public boolean remove(long id) {
 		return productRepository.remove(id);
-		/* TODO
-		 * Tester si le produit est commander
-		 *  */ 
+		/*
+		 * TODO Tester si le produit est commander
+		 */
 	}
 
-	public List<Product> search(String name, String category, int page, int resultByPage) {
+	public ResultListCounted search(String name, String category, int page, int resultByPage) {
 		return productRepository.search(name, category, page, resultByPage);
 	}
 

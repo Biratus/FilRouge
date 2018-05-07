@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import fr.dta.formafond.model.Category;
 import fr.dta.formafond.model.Product;
+import fr.dta.formafond.model.ResultListCounted;
 import fr.dta.formafond.service.ProductService;
 
 @RestController
@@ -35,7 +36,7 @@ public class ProductController {
 		node.put("id", p.getId());
 		node.put("name", p.getName());
 		node.put("type", p.getType());
-		node.put("descript",p.getDescript());
+		node.put("descript", p.getDescript());
 		node.put("price", p.getPrice());
 		node.put("category", p.getCategory().toString());
 		node.put("qty", p.getQty());
@@ -49,7 +50,7 @@ public class ProductController {
 		}
 		return node;
 	}
-	
+
 	@CrossOrigin
 	@RequestMapping(value = "/{searchId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public JsonNode getProduct(@PathVariable("searchId") long id) {
@@ -89,7 +90,7 @@ public class ProductController {
 
 	@CrossOrigin
 	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Product> search(@RequestParam(required = false) String name,
+	public ResultListCounted search(@RequestParam(required = false) String name,
 			@RequestParam(required = false) String category, @RequestParam(required = false) int page,
 			@RequestParam(required = false) int resultByPage) {
 		return productService.search(name, category, page, resultByPage);
@@ -97,7 +98,7 @@ public class ProductController {
 
 	@CrossOrigin
 	@RequestMapping(value = "/categories", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<String> getCategories(){
+	public List<String> getCategories() {
 		return Category.getCategories();
 	}
 }

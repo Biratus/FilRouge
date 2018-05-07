@@ -7,11 +7,14 @@ import java.util.stream.Stream;
 import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import fr.dta.formafond.model.Category;
 import fr.dta.formafond.model.Product;
+import fr.dta.formafond.model.ResultListCounted;
 
 @Repository
 @Transactional
@@ -21,21 +24,38 @@ public class ProductRepository extends PrimeDAO<Product> {
 		super(Product.class);
 	}
 
-	public List<Product> search(String name, String category, int page, int resultByPage) {
-		String[] listCategories = category.isEmpty()?null:category.split("-");
+	public ResultListCounted search(String name, String category, int page, int resultByPage) {
+		String[] listCategories = category.isEmpty() ? null : category.split("-");
 
-		Criteria criteria = getSession().createCriteria(Product.class).setMaxResults(50);
+		// Criteria Count
+		Criteria criteriaCount = getSession().createCriteria(Product.class);
+		constructQuerySearch(criteriaCount, name, listCategories);
+		Integer count = ((Long) criteriaCount.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+
+		// Criteria Search
+		Criteria criteriaSearch = getSession().createCriteria(Product.class);
+		criteriaSearch.addOrder(Order.asc("price"));
+
+		// Criteria ResultList
+		constructQuerySearch(criteriaSearch, name, listCategories);
+		Criteria listSearch = criteriaSearch.setFirstResult(resultByPage * (page - 1)).setMaxResults(resultByPage);
+		List<Product> searchList = criteriaSearch.list();
+		return new ResultListCounted(count, searchList);
+	}
+
+	private void constructQuerySearch(Criteria criteria, String name, String[] listCategories) {
 		if (name != null && !name.isEmpty()) {
 			criteria.add(Restrictions.like("name", "%" + name + "%"));
+			criteria.addOrder(Order.asc("price"));
 		}
 		if (listCategories != null && listCategories.length != 0) {
 			for (String ct : listCategories) {
 				System.out.println(listCategories);
-				System.out.println(" cat: ."+ct+".");
+				System.out.println(" cat: ." + ct + ".");
 			}
-			criteria.add(Restrictions.in("category", Stream.of(listCategories).map(str -> Category.fromString(str)).collect(Collectors.toList())));
+			criteria.add(Restrictions.in("category",
+					Stream.of(listCategories).map(str -> Category.fromString(str)).collect(Collectors.toList())));
+
 		}
-		criteria.setFirstResult(resultByPage * (page - 1)).setMaxResults(resultByPage);
-		return criteria.list();
 	}
 }
