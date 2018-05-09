@@ -48,5 +48,17 @@ public class ProductService {
 	public ResultListCounted search(String name, String category, int page, int resultByPage) {
 		return productRepository.search(name, category, page, resultByPage);
 	}
+	
+	public void activate(Long prod_id) {
+		Product p = this.get(prod_id);
+		p.setActiv(true);
+		productRepository.save(p);
+	}
+	
+	public void deactivate(Long prod_id) {
+		Product p = this.get(prod_id);
+		p.setActiv(false);
+		productRepository.save(p);
+	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
@@ -49,13 +50,8 @@ public class ProductRepository extends PrimeDAO<Product> {
 		}
 		// Criteria Search by categories
 		if (listCategories != null && listCategories.length != 0) {
-			for (String ct : listCategories) {
-				System.out.println(listCategories);
-				System.out.println(" cat: ." + ct + ".");
-			}
 			criteria.add(Restrictions.in("category",
 					Stream.of(listCategories).map(str -> Category.fromString(str)).collect(Collectors.toList())));
-
 		}
 	}
 }

@@ -63,15 +63,15 @@ public class Product extends PrimeModel {
 	public ObjectNode toJson() {
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode node = mapper.createObjectNode();
-		node.put("id", this.getId());
-		node.put("name", this.getName());
-		node.put("type", this.getType());
-		node.put("descript", this.getDescript());
-		node.put("price", this.getPrice());
-		node.put("category", this.getCategory().toString());
-		node.put("qty", this.getQty());
-		node.put("src", this.getSrc());
-		node.put("activ", this.isActiv());
+		node.put("id", this.id);
+		node.put("name", this.name);
+		node.put("type", this.type);
+		node.put("descript", this.descript);
+		node.put("price", this.price);
+		node.put("category", this.category.toString());
+		node.put("qty", this.qty);
+		node.put("src", this.src);
+		node.put("activ", this.activ);
 
 		try {
 			System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node));
@@ -145,11 +145,11 @@ public class Product extends PrimeModel {
 		this.descript = descript;
 	}
 
-	public boolean isActiv() {
+	public Boolean getActiv() {
 		return activ;
 	}
 
-	public void setActiv(boolean activ) {
+	public void setActiv(Boolean activ) {
 		this.activ = activ;
 	}
 

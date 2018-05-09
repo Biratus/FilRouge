@@ -58,14 +58,6 @@ public class ProductController {
 		productService.remove(id);
 	}
 
-	// @CrossOrigin
-	// @RequestMapping(method = RequestMethod.DELETE, consumes =
-	// MediaType.APPLICATION_JSON_VALUE)
-	// public void remove(@RequestBody Product p) {
-	// System.out.println(p);
-	// productService.remove(p);
-	// }
-
 	@CrossOrigin
 	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ObjectNode search(@RequestParam(required = false) String name,
@@ -78,5 +70,18 @@ public class ProductController {
 	@RequestMapping(value = "/categories", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<String> getCategories() {
 		return Category.getCategories();
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value="/{id}/activate",method=RequestMethod.GET)
+	public void activateProduct(@PathVariable long id) {
+		productService.activate(id);
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value="/{id}/deactivate",method=RequestMethod.GET)
+	public void deactivateProduct(@PathVariable long id) {
+		productService.deactivate(id);
+		
 	}
 }

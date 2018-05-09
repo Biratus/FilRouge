@@ -58,8 +58,8 @@ public class FileUploadController {
                 {
                     new File(realPathtoUploads).mkdir();
                 }
-               
-                filePath = realPathtoUploads + filename;
+                
+                filePath = realPathtoUploads + filename+"."+file.getContentType().split("/")[1];
                 File dest = new File(filePath);
                 file.transferTo(dest);
             } catch(Exception e) {
