@@ -38,6 +38,7 @@ public class OrderController {
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		ObjectNode node = mapper.createObjectNode();
 		node.put("id", o.getId());
+		node.put("date", o.getDate().toString());
 		node.put("user_id", o.getUser().getId());
 		ArrayNode products=node.putArray("products");
 		for(Product p:o.getProducts()) {
@@ -62,7 +63,7 @@ public class OrderController {
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value = "/orders", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public JsonNode getAll() {
 		ObjectMapper mapper = new ObjectMapper();
 		ArrayNode arrNode = mapper.createArrayNode();
@@ -73,16 +74,11 @@ public class OrderController {
 	}
 	
 	@CrossOrigin
-	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void save(@RequestBody Order o) {
 		Date date=new Date();
 		o.setDate(date);
 		orderService.save(o);
 	}
 	
-	@CrossOrigin
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void remove(@PathVariable long id) {
-		orderService.remove(id);
-	}
 }
