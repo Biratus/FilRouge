@@ -33,7 +33,7 @@ public class User extends PrimeModel {
 	private String address;
 	@NotNull
 	private String password;
-	private Long phone;
+	private String phone;
 
 	private String role;
 	
@@ -42,7 +42,7 @@ public class User extends PrimeModel {
 
 	public User() {}
 
-	public User(String lastName, String firstName, String mail, String address, long phone,String password) {
+	public User(String lastName, String firstName, String mail, String address, String phone,String password) {
 		super();
 		this.lastName = lastName;
 		this.firstName = firstName;
@@ -99,7 +99,7 @@ public class User extends PrimeModel {
 		this.address = address;
 	}
 
-	public long getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
@@ -115,7 +115,7 @@ public class User extends PrimeModel {
 		this.password = password;
 	}
 
-	public void setPhone(Long phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	
