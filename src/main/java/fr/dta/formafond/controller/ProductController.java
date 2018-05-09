@@ -46,9 +46,10 @@ public class ProductController {
 	}
 
 	@CrossOrigin
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void save(@RequestBody Product p) {
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ObjectNode save(@RequestBody Product p) {
 		productService.save(p);
+		return p.toJson();
 	}
 
 	@CrossOrigin

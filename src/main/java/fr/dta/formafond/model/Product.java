@@ -41,7 +41,6 @@ public class Product extends PrimeModel {
 	private String src;
 	private String descript;
 
-	@NotBlank
 	private Boolean activ = false;
 
 	public Product(Long id, String name, String type, Integer price, Category category, Integer qty, String src,
