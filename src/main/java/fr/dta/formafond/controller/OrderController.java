@@ -55,8 +55,10 @@ public class OrderController {
 		ObjectNode node = JsonNodeFactory.instance.objectNode();
 		try {
 			List<Order> orders = orderService.getOrdersWithProduct(id);
-			ArrayNode arr=node.arrayNode();
-			for(Order o : orders) arr.add(o.toJson());
+			ArrayNode arr=node.putArray("orders");
+			for(Order o : orders) {
+				arr.add(o.getId());
+			}
 		} catch (ProductNotFoundException e) {
 			node.put("exception", "Product with id "+e.getProdId()+" Not Found");
 		}
