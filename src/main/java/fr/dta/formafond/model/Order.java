@@ -10,6 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 
 
@@ -22,6 +23,7 @@ public class Order extends PrimeModel {
 	@GeneratedValue(generator = "order_gen")
 	private Long id;
 	
+	@NotNull
 	@ManyToOne
 	private User user;
 	

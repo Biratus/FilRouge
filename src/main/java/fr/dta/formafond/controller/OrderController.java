@@ -75,7 +75,7 @@ public class OrderController {
 	
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void save(@RequestBody Order o) {
+	public void saveOrder(@RequestBody Order o) {
 		Date date=new Date();
 		o.setDate(date);
 		orderService.save(o);
