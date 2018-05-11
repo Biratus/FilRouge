@@ -1,11 +1,14 @@
 package fr.dta.formafond.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.dta.formafond.exception.UserAlreadyExistsException;
+import fr.dta.formafond.model.Order;
 import fr.dta.formafond.model.User;
 import fr.dta.formafond.repository.UserRepository;
 
@@ -33,7 +36,7 @@ public class UserService {
 		}
 	}
 
-	public User getById(int id) {
+	public User getById(Long id) {
 		return urep.get(id);
 	}
 
@@ -43,6 +46,14 @@ public class UserService {
 
 	public User getByUsername(String username) {
 		return urep.findByUsername(username);
+	}
+	
+	public List<Order> getOrdersOfUser(Long id) {
+		User u = urep.get(id);
+		
+		List<Order> orderL=urep.getOrdersOf(u);
+		
+		return orderL;
 	}
 
 }
