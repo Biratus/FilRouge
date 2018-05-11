@@ -22,8 +22,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import fr.dta.formafond.exception.ProductNotFoundException;
 import fr.dta.formafond.model.Order;
 import fr.dta.formafond.model.Product;
-import fr.dta.formafond.model.ResultListCounted;
 import fr.dta.formafond.service.OrderService;
+import fr.dta.formafond.service.ProductService;
 
 @RestController
 @RequestMapping("/Api/order")
@@ -31,6 +31,9 @@ public class OrderController {
 
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	ProductService prodServ;
 
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,8 +52,13 @@ public class OrderController {
 		Date date = new Date();
 		o.setDate(date);
 		Integer priceTot = 0;
+		o.getProducts().forEach(System.out::println);
 		for (Product i : o.getProducts()) {
-			priceTot = priceTot += i.getPrice();
+			//si ces valeurs sont null alors get dans la bdd
+			if(i.getQty()==null || i.getPrice()==null) {
+				Product p=prodServ.get(i.getId());
+				priceTot += p.getPrice()*p.getQty();
+			} else priceTot += i.getPrice()*i.getQty();
 		}
 		o.setPriceTot(priceTot);
 		orderService.save(o);
