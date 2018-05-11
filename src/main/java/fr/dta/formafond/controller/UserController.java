@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,7 +77,7 @@ public class UserController {
 	@RequestMapping(value = "/{id}/orders", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ObjectNode getOrdersByUser(@PathVariable Long id) {
 		List<Order> orders = userv.getOrdersOfUser(id);
-		
+
 		ObjectNode node = JsonNodeFactory.instance.objectNode();
 		ArrayNode arr = node.putArray("orders");
 		for (Order o : orders) {
