@@ -9,11 +9,20 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class ResultListCounted {
 	private Integer count;
-	private List<Product> listSearch;
+	private List<Product> listSearchProd;
+	private List<User> listSearchOrder;
+	private List<Order> listSearchPrice;
 
-	public ResultListCounted(Integer count, List<Product> listSearch) {
+	/*
+	 * Attention ce code est expérimental
+	 * 
+	 */
+	
+	public <T> ResultListCounted(Integer count, List<T> listSearch,Class klass) {
 		this.count = count;
-		this.listSearch = listSearch;
+		if(Product.class.equals(klass)) this.listSearchProd =(List<Product>) listSearch;
+		else if(User.class.equals(klass)) this.listSearchOrder=(List<User>)listSearch;
+		else if(Order.class.equals(klass)) this.listSearchPrice=(List<Order>)listSearchPrice;
 	}
 
 	public ResultListCounted() {
@@ -25,7 +34,39 @@ public class ResultListCounted {
 		ObjectNode node = mapper.createObjectNode();
 		node.put("count", this.count);
 		ArrayNode r = node.putArray("listSearch");
-		for (Product ls : this.getListSearch()) {
+		for (Product ls : listSearchProd) {
+			r.add(ls.toJson());
+		}
+		try {
+			System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return node;
+	}
+	
+	public ObjectNode toJsonOrder() {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode node = mapper.createObjectNode();
+		node.put("count", this.count);
+		ArrayNode r = node.putArray("listSearch");
+		for (User ls : listSearchOrder) {
+			r.add(ls.toJson());
+		}
+		try {
+			System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return node;
+	}
+	
+	public ObjectNode toJsonPrice() {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode node = mapper.createObjectNode();
+		node.put("count", this.count);
+		ArrayNode r = node.putArray("listSearch");
+		for (Order ls : listSearchPrice) {
 			r.add(ls.toJson());
 		}
 		try {
@@ -45,16 +86,16 @@ public class ResultListCounted {
 	}
 
 	public List<Product> getListSearch() {
-		return listSearch;
+		return listSearchProd;
 	}
 
 	public void setListSearch(List<Product> listSearch) {
-		this.listSearch = listSearch;
+		this.listSearchProd = listSearch;
 	}
 
 	@Override
 	public String toString() {
-		return "ResultListCounted [count=" + count + ", listSearch=" + listSearch + "]";
+		return "ResultListCounted [count=" + count + ", listSearch=" + listSearchProd + "]";
 	}
 
 }

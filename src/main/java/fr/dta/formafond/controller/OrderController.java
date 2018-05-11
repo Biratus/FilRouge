@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -20,6 +21,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import fr.dta.formafond.exception.ProductNotFoundException;
 import fr.dta.formafond.model.Order;
+import fr.dta.formafond.model.Product;
+import fr.dta.formafond.model.ResultListCounted;
 import fr.dta.formafond.service.OrderService;
 
 @RestController
@@ -45,6 +48,11 @@ public class OrderController {
 	public void saveOrder(@RequestBody Order o) {
 		Date date = new Date();
 		o.setDate(date);
+		Integer priceTot = 0;
+		for (Product i : o.getProducts()) {
+			priceTot = priceTot += i.getPrice();
+		}
+		o.setPriceTot(priceTot);
 		orderService.save(o);
 	}
 
@@ -55,13 +63,29 @@ public class OrderController {
 		ObjectNode node = JsonNodeFactory.instance.objectNode();
 		try {
 			List<Order> orders = orderService.getOrdersWithProduct(id);
-			ArrayNode arr=node.putArray("orders");
-			for(Order o : orders) {
+			ArrayNode arr = node.putArray("orders");
+			for (Order o : orders) {
 				arr.add(o.getId());
 			}
 		} catch (ProductNotFoundException e) {
-			node.put("exception", "Product with id "+e.getProdId()+" Not Found");
+			node.put("exception", "Product with id " + e.getProdId() + " Not Found");
 		}
 		return node;
+	}
+
+	@CrossOrigin
+	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ObjectNode search(@RequestParam(required = false) String mail,
+			@RequestParam(required = false) String lastName, @RequestParam(required = false) String firstName,
+			@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer resultByPage) {
+		return orderService.search(mail, lastName, firstName, page, resultByPage).toJsonOrder();
+	}
+
+	@CrossOrigin
+	@RequestMapping(value = "/price", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ObjectNode search(@RequestParam(required = false) Integer priceMin,
+			@RequestParam(required = false) Integer priceMax, @RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer resultByPage) {
+		return orderService.search(priceMin, priceMax, page, resultByPage).toJsonPrice();
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import fr.dta.formafond.exception.ProductNotFoundException;
 import fr.dta.formafond.model.Order;
 import fr.dta.formafond.model.Product;
+import fr.dta.formafond.model.ResultListCounted;
 import fr.dta.formafond.repository.OrderRepository;
 import fr.dta.formafond.repository.ProductRepository;
 
@@ -46,5 +47,13 @@ public class OrderService {
 		else {
 			return orderRepository.getOrderWithProduct(p);
 		}
+	}
+
+	public ResultListCounted search(String mail, String lastName, String firstName, int page, int resultByPage) {
+		return orderRepository.search(mail, lastName, firstName, page, resultByPage);
+	}
+
+	public ResultListCounted search(Integer priceMin, Integer priceMax, Integer page, Integer resultByPage) {
+		return orderRepository.searchPrice(priceMin, priceMax, page, resultByPage);
 	}
 }

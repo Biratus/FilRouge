@@ -36,14 +36,16 @@ public class Order extends PrimeModel {
 	private List<Product> products;
 
 	private Date date;
+	private Integer priceTot;
 
 	public Order() {
 
 	}
 
-	public Order(Long id, Date date) {
+	public Order(Long id, Date date, Integer priceTot) {
 		this.id = id;
 		this.date = date;
+		this.priceTot = priceTot;
 	}
 
 	public Long getId() {
@@ -80,7 +82,7 @@ public class Order extends PrimeModel {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", user=" + user + ", products=" + products + ", date=" + date + "]";
+		return "Order [id=" + id + ", user=" + user + ", products=" + products + ", date=" + date + ", priceTot=" + priceTot+ "]";
 	}
 
 	public ObjectNode toJson() {
@@ -103,6 +105,14 @@ public class Order extends PrimeModel {
 			e.printStackTrace();
 		}
 		return node;
+	}
+
+	public Integer getPriceTot() {
+		return priceTot;
+	}
+
+	public void setPriceTot(Integer priceTot) {
+		this.priceTot = priceTot;
 	}
 
 }

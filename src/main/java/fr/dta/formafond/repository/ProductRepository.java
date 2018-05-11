@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -34,13 +34,13 @@ public class ProductRepository extends PrimeDAO<Product> {
 
 		// Criteria Search
 		Criteria criteriaSearch = getSession().createCriteria(Product.class);
-		// criteriaSearch.addOrder(Order.asc("price"));
+		criteriaSearch.addOrder(Order.asc("price"));
 
 		// Criteria ResultList
 		constructQuerySearch(criteriaSearch, name, listCategories);
 		Criteria listSearch = criteriaSearch.setFirstResult(resultByPage * (page - 1)).setMaxResults(resultByPage);
 		List<Product> searchList = criteriaSearch.list();
-		return new ResultListCounted(count, searchList);
+		return new ResultListCounted(count, searchList,Product.class);
 	}
 
 	private void constructQuerySearch(Criteria criteria, String name, String[] listCategories) {
