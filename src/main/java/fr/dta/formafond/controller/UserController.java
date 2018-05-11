@@ -37,13 +37,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/current", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@CrossOrigin
 	public ObjectNode getConnectedUser() {
 		return secuServ.getConnectedUser().toJson();
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@CrossOrigin // (origins= {"http://localhost:4200"})
 	public ObjectNode createUser(@RequestBody User u) {
 		ObjectNode node = JsonNodeFactory.instance.objectNode();
 		try {
@@ -56,7 +54,6 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	// @CrossOrigin
 	public ObjectNode getUserById(@PathVariable Long id) {
 		User u = userv.getById(id);
 		if (u == null) {
@@ -68,7 +65,6 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/byName", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	// @CrossOrigin
 	public ObjectNode getUserByName(@RequestParam String name) {
 		User u = userv.getByUsername(name);
 		if (u == null) {
@@ -92,7 +88,6 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@CrossOrigin
 	public void updateUser(@RequestBody User u) {
 		userv.updateUser(u);
 	}
