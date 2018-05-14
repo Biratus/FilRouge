@@ -22,7 +22,7 @@ import fr.dta.formafond.model.Product;
 import fr.dta.formafond.service.ProductService;
 
 @RestController
-@RequestMapping("/Api/product")
+@RequestMapping("/api/product")
 public class ProductController {
 
 	@Autowired
@@ -30,12 +30,12 @@ public class ProductController {
 
 	@CrossOrigin
 	@RequestMapping(value = "/{searchId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public JsonNode getProduct(@PathVariable("searchId") long id) {
+	public JsonNode getProduct(@PathVariable long id) {
 		return productService.get(id).toJson();
 	}
 
 	@CrossOrigin
-	@RequestMapping(value = "/products", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public JsonNode getAll() {
 		ObjectMapper mapper = new ObjectMapper();
 		ArrayNode arrNode = mapper.createArrayNode();
@@ -46,7 +46,7 @@ public class ProductController {
 	}
 
 	@CrossOrigin
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ObjectNode save(@RequestBody Product p) {
 		productService.save(p);
 		return p.toJson();
@@ -71,22 +71,22 @@ public class ProductController {
 	public List<String> getCategories() {
 		return Category.getCategories();
 	}
-	
+
 	@CrossOrigin
-	@RequestMapping(value="/{id}/activate",method=RequestMethod.GET)
+	@RequestMapping(value = "/{id}/activate", method = RequestMethod.GET)
 	public void activateProduct(@PathVariable long id) {
 		productService.activate(id);
 	}
-	
+
 	@CrossOrigin
-	@RequestMapping(value="/{id}/deactivate",method=RequestMethod.GET)
+	@RequestMapping(value = "/{id}/deactivate", method = RequestMethod.GET)
 	public void deactivateProduct(@PathVariable long id) {
 		productService.deactivate(id);
-		
+
 	}
-	
-	@RequestMapping(value="/{id}/quantity/{newQty}",method=RequestMethod.PUT)
-	public void changeStock(@PathVariable Long id,@PathVariable Long newQty) {
-		productService.changeQuantity(id,newQty);
+
+	@RequestMapping(value = "/{id}/quantity/{newQty}", method = RequestMethod.PUT)
+	public void changeStock(@PathVariable Long id, @PathVariable Long newQty) {
+		productService.changeQuantity(id, newQty);
 	}
 }

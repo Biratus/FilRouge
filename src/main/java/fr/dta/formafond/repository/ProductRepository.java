@@ -40,7 +40,7 @@ public class ProductRepository extends PrimeDAO<Product> {
 		constructQuerySearch(criteriaSearch, name, listCategories);
 		Criteria listSearch = criteriaSearch.setFirstResult(resultByPage * (page - 1)).setMaxResults(resultByPage);
 		List<Product> searchList = criteriaSearch.list();
-		return new ResultListCounted(count, searchList,Product.class);
+		return new ResultListCounted(count, searchList, Product.class);
 	}
 
 	private void constructQuerySearch(Criteria criteria, String name, String[] listCategories) {

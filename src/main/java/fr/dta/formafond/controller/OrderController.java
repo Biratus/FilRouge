@@ -24,7 +24,7 @@ import fr.dta.formafond.service.OrderService;
 import fr.dta.formafond.service.ProductService;
 
 @RestController
-@RequestMapping("/Api/order")
+@RequestMapping("/api/order")
 public class OrderController {
 
 	@Autowired
@@ -47,7 +47,7 @@ public class OrderController {
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void saveOrder(@RequestBody ObjectNode node) {
-		orderService.createOrder(node.get("user").get("id").asLong(),node.get("products"));
+		orderService.createOrder(node.get("user").get("id").asLong(), node.get("products"));
 	}
 
 	@CrossOrigin
