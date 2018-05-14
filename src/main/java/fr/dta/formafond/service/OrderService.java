@@ -83,7 +83,7 @@ public class OrderService {
 		Integer priceTot = 0;
 		for (JsonNode pNode : products) {
 			Product p = prodRep.get(pNode.get("id").asLong());
-			priceTot += (pNode.get("quantity").asInt()) + p.getPrice();
+			priceTot += (pNode.get("qty").asInt()) + p.getPrice();
 		}
 		o.setPriceTot(priceTot);
 
