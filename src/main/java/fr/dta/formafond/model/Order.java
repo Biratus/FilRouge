@@ -87,6 +87,7 @@ public class Order extends PrimeModel {
 		node.put("id", this.id);
 		node.put("date", this.date.toString());
 		node.put("user_id", this.user.getId());
+		node.put("priceTot", this.priceTot);
 		ArrayNode products = node.putArray("products");
 		for (OrderProduct op : this.orderProd) {
 			products.add(op.toJson());
