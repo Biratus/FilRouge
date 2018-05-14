@@ -2,19 +2,20 @@ package fr.dta.formafond.model;
 
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -40,6 +41,10 @@ public class Product extends PrimeModel {
 	private Integer qty;
 	private String src;
 	private String descript;
+	
+	@OneToMany(mappedBy="product")
+	private Set<OrderProduct> orderProd=new HashSet<>();
+	
 
 	private Boolean activ = false;
 
@@ -73,11 +78,6 @@ public class Product extends PrimeModel {
 		node.put("src", this.src);
 		node.put("activ", this.activ);
 
-		try {
-			System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node));
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
 		return node;
 	}
 

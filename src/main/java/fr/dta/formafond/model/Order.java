@@ -1,18 +1,19 @@
 package fr.dta.formafond.model;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -31,9 +32,9 @@ public class Order extends PrimeModel {
 	@NotNull
 	@ManyToOne
 	private User user;
-
-	@ManyToMany(fetch = FetchType.EAGER)
-	private List<Product> products;
+	
+	@OneToMany(mappedBy="order",fetch=FetchType.EAGER)
+	private Set<OrderProduct> orderProd=new HashSet<>();
 
 	private Date date;
 	private Integer priceTot;
@@ -63,15 +64,7 @@ public class Order extends PrimeModel {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-
+	
 	public Date getDate() {
 		return date;
 	}
@@ -82,7 +75,7 @@ public class Order extends PrimeModel {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", user=" + user + ", products=" + products + ", date=" + date + ", priceTot=" + priceTot+ "]";
+		return "Order [id=" + id + ", user=" + user + ", products=" + orderProd + ", date=" + date + ", priceTot=" + priceTot+ "]";
 	}
 
 	public ObjectNode toJson() {
@@ -95,14 +88,8 @@ public class Order extends PrimeModel {
 		node.put("date", this.date.toString());
 		node.put("user_id", this.user.getId());
 		ArrayNode products = node.putArray("products");
-		for (Product p : this.products) {
-			products.add(p.toJson());
-		}
-
-		try {
-			System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node));
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+		for (OrderProduct op : this.orderProd) {
+			products.add(op.toJson());
 		}
 		return node;
 	}
@@ -115,4 +102,13 @@ public class Order extends PrimeModel {
 		this.priceTot = priceTot;
 	}
 
+	public Set<OrderProduct> getOrderProd() {
+		return orderProd;
+	}
+
+	public void setOrderProd(Set<OrderProduct> orderProd) {
+		this.orderProd = orderProd;
+	}
+
+	
 }

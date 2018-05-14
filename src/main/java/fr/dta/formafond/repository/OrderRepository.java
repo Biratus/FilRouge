@@ -25,7 +25,7 @@ public class OrderRepository extends PrimeDAO<Order> {
 
 	public List<Order> getOrderWithProduct(Product p) {
 		// trouver le produit avec l'id : p
-		TypedQuery<Order> query = em.createQuery("select o from Order o where :p in elements(o.products)", Order.class);
+		TypedQuery<Order> query = em.createQuery("select o from Order o where :p in elements(o.orderProd)", Order.class);
 		query.setParameter("p", p);
 		return query.getResultList();
 	}

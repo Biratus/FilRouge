@@ -51,13 +51,22 @@ public class ProductService {
 	
 	public void activate(Long prod_id) {
 		Product p = this.get(prod_id);
+		if(p==null) return;
 		p.setActiv(true);
 		productRepository.save(p);
 	}
 	
 	public void deactivate(Long prod_id) {
 		Product p = this.get(prod_id);
+		if(p==null) return;
 		p.setActiv(false);
+		productRepository.save(p);
+	}
+	
+	public void changeQuantity(Long id,Long newQty) {
+		Product p = this.get(id);
+		if(p==null) return;
+		p.setQty(newQty.intValue());
 		productRepository.save(p);
 	}
 

@@ -84,4 +84,9 @@ public class ProductController {
 		productService.deactivate(id);
 		
 	}
+	
+	@RequestMapping(value="/{id}/quantity/{newQty}",method=RequestMethod.PUT)
+	public void changeStock(@PathVariable Long id,@PathVariable Long newQty) {
+		productService.changeQuantity(id,newQty);
+	}
 }

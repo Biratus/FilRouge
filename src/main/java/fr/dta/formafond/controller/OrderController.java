@@ -1,6 +1,5 @@
 package fr.dta.formafond.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import fr.dta.formafond.exception.ProductNotFoundException;
 import fr.dta.formafond.model.Order;
-import fr.dta.formafond.model.Product;
 import fr.dta.formafond.service.OrderService;
 import fr.dta.formafond.service.ProductService;
 
@@ -31,7 +29,7 @@ public class OrderController {
 
 	@Autowired
 	OrderService orderService;
-	
+
 	@Autowired
 	ProductService prodServ;
 
@@ -48,20 +46,8 @@ public class OrderController {
 
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void saveOrder(@RequestBody Order o) {
-		Date date = new Date();
-		o.setDate(date);
-		Integer priceTot = 0;
-		o.getProducts().forEach(System.out::println);
-		for (Product i : o.getProducts()) {
-			//si ces valeurs sont null alors get dans la bdd
-			if(i.getQty()==null || i.getPrice()==null) {
-				Product p=prodServ.get(i.getId());
-				priceTot += p.getPrice()*p.getQty();
-			} else priceTot += i.getPrice()*i.getQty();
-		}
-		o.setPriceTot(priceTot);
-		orderService.save(o);
+	public void saveOrder(@RequestBody ObjectNode node) {
+		orderService.createOrder(node.get("user").get("id").asLong(),node.get("products"));
 	}
 
 	@CrossOrigin
