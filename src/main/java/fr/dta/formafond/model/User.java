@@ -130,6 +130,7 @@ public class User extends PrimeModel {
 
 	public ObjectNode toJson() {
 		ObjectNode node=JsonNodeFactory.instance.objectNode();
+		node.put("id", this.id);
 		node.put("firstname", this.firstName);
 		node.put("lastname", this.lastName);
 		node.put("role", this.role);
