@@ -92,7 +92,7 @@ public class OrderService {
 		for (JsonNode pNode : products) {
 			Product p = prodRep.get(pNode.get("id").asLong());
 
-			OrderProduct op = new OrderProduct(o, p, pNode.get("quantity").asInt());
+			OrderProduct op = new OrderProduct(o, p, pNode.get("qty").asInt());
 			opRep.save(op);
 		}
 	}
