@@ -2,6 +2,9 @@ package fr.dta.formafond.controller;
 
 import java.io.File;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,7 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/image")
+@PropertySource("classpath:application.properties")
 public class FileUploadController {
+	
+	@Autowired
+	private Environment env;
 	
 	public FileUploadController() {
 	}
@@ -21,7 +28,7 @@ public class FileUploadController {
 		String filePath="";
 		if (!file.isEmpty()) {
             try {
-                String realPathtoUploads = "C:/Users/cbirette/Documents/Node/FilRouge/formafond/src/assets/";// request.getServletContext().getRealPath(uploadsDir);
+                String realPathtoUploads = env.getRequiredProperty("uploadUrl")+"/assets/";
                 if(! new File(realPathtoUploads).exists())
                 {
                     new File(realPathtoUploads).mkdir();
@@ -35,7 +42,7 @@ public class FileUploadController {
             }
 		}
 
-		return filename+"."+file.getContentType().split("/")[1];
+		return "assets/"+filename+"."+file.getContentType().split("/")[1];
 	}
 
 }
